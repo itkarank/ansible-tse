@@ -1,15 +1,14 @@
-  name: myfirstplaybook
-  hosts: web
-  became: yes
-  became_user: root
-  
-  task:
-    - name: make sure apache is at the latest version
+---
+- name: myfirstplaybook
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install Apache
       yum:
         name: httpd
-        state: latest
-
-    - name: ensure apache is running
+        state: present
+    - name: Start Apache service
       service:
         name: httpd
         state: started
+        enabled: yes
