@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Run ansible-playbook command with the inventory file
-                    sh 'ansible-playbook -i /home/ec2-user/hosts simple.yml'
+                    sh 'ansible-playbook -i hosts simple.yml'
                 }
             }
         }
