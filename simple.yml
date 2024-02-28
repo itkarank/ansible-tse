@@ -1,5 +1,5 @@
   name: myfirstplaybook
-  hosts: all
+  hosts: web
   became: yes
   became_user: root
   
