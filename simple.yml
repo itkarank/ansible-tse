@@ -1,6 +1,5 @@
----
-- name: myfirstplaybook
-  hosts: web
+  name: myfirstplaybook
+  hosts: all
   became: yes
   became_user: root
   
