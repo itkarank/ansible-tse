@@ -5,7 +5,8 @@ pipeline {
         stage('Deploy Ansible Playbook') {
             steps {
                 // Execute the Ansible playbook
-                sh 'ansible-playbook -i inventory simple.yml'
+                sh 'ansible-playbook -i /home/ec2-user simple.yml
+'
             }
         }
     }
