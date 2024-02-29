@@ -1,14 +1,62 @@
 ---
-- name: myfirstplaybook
+- name: Install Jenkins and Docker on Amazon Linux
   hosts: all
-  become: yes
+  become: true
   tasks:
-    - name: Install Apache
+    - name: Install Java (required for Jenkins)
       yum:
-        name: httpd
+        name: java-17
         state: present
-    - name: Start Apache service
+
+    - name: Add Jenkins Repository Key
+      rpm_key:
+        key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+        state: present
+
+    - name: Add Jenkins Repository
+      yum_repository:
+        name: jenkins
+        description: Jenkins Official Repository
+        baseurl: http://pkg.jenkins.io/redhat-stable
+        gpgcheck: yes
+        state: present
+
+    - name: Install Jenkins
+      yum:
+        name: jenkins
+        state: present
+
+    - name: Install Docker prerequisites
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - yum-utils
+        - device-mapper-persistent-data
+        - lvm2
+
+    - name: Add Docker CE Repository
+      yum_repository:
+        name: docker-ce
+        description: Docker CE Repository
+        baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+        gpgcheck: yes
+        gpgkey: https://download.docker.com/linux/centos/gpg
+        enabled: yes
+
+    - name: Install Docker CE
+      yum:
+        name: docker-ce
+        state: present
+
+    - name: Start Docker Service
       service:
-        name: httpd
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Start Jenkins Service
+      service:
+        name: jenkins
         state: started
         enabled: yes
