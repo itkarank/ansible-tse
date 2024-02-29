@@ -16,20 +16,20 @@
         baseurl: http://pkg.jenkins.io/redhat-stable
         gpgcheck: no   # Disabling GPG check for Jenkins
         state: present
-      when: "'web' in group_names"  # Only add Jenkins repository on 'web' hosts
+      when: "'CI/CD-server' in group_names"  # Only add Jenkins repository on 'CI/CD-server' hosts
 
     - name: Install Jenkins
       yum:
         name: jenkins
         state: present
-      when: "'web' in group_names"  # Only install Jenkins on 'web' hosts
+      when: "'CI/CD-server' in group_names"  # Only install Jenkins on 'CI/CD-server' hosts
 
     - name: Start Jenkins Service
       service:
         name: jenkins
         state: started
         enabled: yes
-      when: "'web' in group_names"  # Only start Jenkins service on 'web' hosts
+      when: "'CI/CD-server' in group_names"  # Only start Jenkins service on 'CI/CD-server' hosts
 
     - name: Install Docker
       yum:
