@@ -3,7 +3,18 @@
   hosts: all
   become: true
   tasks:
-    - name: Install Java (required for Jenkins)
+    - name: Install Docker
+      yum:
+        name: docker
+        state: present
+
+    - name: Start Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install Java 
       yum:
         name: java-17
         state: present
@@ -31,13 +42,10 @@
         enabled: yes
       when: "'CI/CD-server' in group_names"  # Only start Jenkins service on 'CI/CD-server' hosts
 
-    - name: Install Docker
-      yum:
-        name: docker
-        state: present
+    - name: Pull SonarQube Docker image
+      command: docker pull sonarqube:latest
+      when: "'CI/CD-server' in group_names"  # Only execute this task on 'CI/CD-server' hosts
 
-    - name: Start Docker Service
-      service:
-        name: docker
-        state: started
-        enabled: yes
+    - name: Run SonarQube container
+      command: docker run -d --name sonarqube -p 9000:9000 sonarqube:latest
+      when: "'CI/CD-server' in group_names"  # Only execute this task on 'CI/CD-server' hosts
