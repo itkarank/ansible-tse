@@ -6,7 +6,8 @@ pipeline {
             steps {
                 script {
                     // Run ansible-playbook command with the inventory file
-                    sh 'ansible-playbook -i /var/lib/jenkins/workspace/testing ansible simple.yml'
+                   sh 'ansible-playbook -i /var/lib/jenkins/workspace/testing/simple.yml'
+
                 }
             }
         }
