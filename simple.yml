@@ -7,7 +7,7 @@
       yum:
         name: java-17
         state: present
-      when: "'web' in group_names"  # Only install Java on 'web' hosts
+      
 
     - name: Add Jenkins Repository
       yum_repository:
