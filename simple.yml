@@ -7,7 +7,7 @@
       yum:
         name: java-17
         state: present
-      when: "'CI/CD-server' in group_names"  # Only install Java on 'web' hosts
+      when: "'web' in group_names"  # Only install Java on 'web' hosts
 
     - name: Add Jenkins Repository
       yum_repository:
@@ -22,14 +22,14 @@
       yum:
         name: jenkins
         state: present
-      when: "'CI/CD-server' in group_names"  # Only install Jenkins on 'web' hosts
+      when: "'web' in group_names"  # Only install Jenkins on 'web' hosts
 
     - name: Start Jenkins Service
       service:
         name: jenkins
         state: started
         enabled: yes
-      when: "'CI/CD-server' in group_names"  # Only start Jenkins service on 'web' hosts
+      when: "'web' in group_names"  # Only start Jenkins service on 'web' hosts
 
     - name: Install Docker
       yum:
