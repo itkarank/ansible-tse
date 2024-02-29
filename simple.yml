@@ -27,14 +27,13 @@
         state: started
         enabled: yes
 
-     - name: Install docker 
+    - name: Install Docker
       yum:
         name: docker
         state: present
 
-      - name: Start docker Service
+    - name: Start Docker Service
       service:
         name: docker
         state: started
         enabled: yes
-
