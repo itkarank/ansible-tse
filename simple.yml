@@ -8,24 +8,13 @@
         name: java-17
         state: present
 
-    - name: Manually add Jenkins repository and import GPG key
-      block:
-        - name: Add Jenkins Repository File
-          copy:
-            content: |
-              [jenkins]
-              name=Jenkins
-              baseurl=http://pkg.jenkins.io/redhat-stable
-              gpgcheck=1
-              gpgkey=https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-            dest: /etc/yum.repos.d/jenkins.repo
-            mode: 0644
-
-        - name: Import Jenkins GPG Key
-          rpm_key:
-            key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-            state: present
-      when: ansible_distribution_major_version == "2"  # Condition for Amazon Linux 2
+    - name: Add Jenkins Repository
+      yum_repository:
+        name: jenkins
+        description: Jenkins Official Repository
+        baseurl: http://pkg.jenkins.io/redhat-stable
+        gpgcheck: no   # Disabling GPG check for Jenkins
+        state: present
 
     - name: Install Jenkins
       yum:
