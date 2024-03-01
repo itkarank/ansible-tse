@@ -1,5 +1,0 @@
-[web]
-CI/CD-server ansible_host=44.203.225.223 ansible_port=22
-
-[app]
-Production-server ansible_host=44.195.26.230 ansible_port=22
